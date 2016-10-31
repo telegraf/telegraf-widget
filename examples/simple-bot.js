@@ -1,7 +1,7 @@
 const Telegraf = require('telegraf')
 const TelegrafWidget = require('../')
 const { Extra, Markup } = Telegraf
-const { Widget, sendWidget, cbButton } = TelegrafWidget
+const { Widget, sendWidget } = TelegrafWidget
 
 const games = [
   {id: 1, title: 'Game one', description: 'Long description...'},
@@ -15,23 +15,29 @@ const games = [
 // Games widget
 const gamesWidget = new Widget('games')
 
-gamesWidget.on('list', (ctx) => {
-  const buttons = games.map((game) => cbButton('games', game.title, 'menu', game.id))
+gamesWidget.create((ctx) => {
+  const buttons = games.map((game) => gamesWidget.pageButton(game.title, 'menu', game.id))
   const extra = Markup.inlineKeyboard(buttons, {columns: 2}).extra()
-  return ctx.widget.forceNew ? ctx.reply('Choose a game:', extra) : ctx.editMessageText('Choose a game:', extra)
+  return ctx.reply('Choose a game:', extra)
+})
+
+gamesWidget.on('list', (ctx) => {
+  const buttons = games.map((game) => gamesWidget.pageButton(game.title, 'menu', game.id))
+  const extra = Markup.inlineKeyboard(buttons, {columns: 2}).extra()
+  return ctx.editMessageText('Ok\nChoose a game:', extra)
 })
 
 gamesWidget.on('menu', (ctx) => {
   const game = games.find((game) => game.id === ctx.widget.args)
   if (!game) {
-    return ctx.widget.invoke('games', 'list')
+    return ctx.widget.switchTo('list')
   }
-  const message = `
+  const text = `
     *${game.title}*
     **${game.description}**
   `
-  const extra = Extra.markup(Markup.inlineKeyboard([], {columns: 2})).markdown()
-  return ctx.widget.forceNew ? ctx.reply(message, extra) : ctx.editMessageText(message, extra)
+  const extra = Extra.markup(Markup.inlineKeyboard([gamesWidget.pageButton('Go back', 'list')])).markdown()
+  return ctx.editMessageText(text, extra)
 })
 
 const widgets = new TelegrafWidget()
