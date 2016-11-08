@@ -4,7 +4,7 @@
 
 # Telegraf widget
 
-⚠️ Experimental project
+⚠️ Experimental
 
 > 📟 Widgets for [Telegraf](https://github.com/telegraf/telegraf)
 
