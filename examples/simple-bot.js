@@ -48,17 +48,18 @@ booksWidget.on('full-info', (ctx) => {
     *${book.title}*
     **${book.description}**
   `
-  const extra = Extra.markup(Markup.inlineKeyboard([
+  const extra = Extra.markdown().markup(Markup.inlineKeyboard([
     booksWidget.button('Show short info', 'short-info', ctx.widget.query),
     booksWidget.button('Go go books list', 'list')
-  ], {columns: 1})).markdown()
+  ], {columns: 1}))
   return ctx.editMessageText(text, extra)
 })
 
 const widgets = new TelegrafWidget()
 widgets.register(booksWidget)
 
-const app = new Telegraf(process.env.BOT_TOKEN)
+const app = new Telegraf(process.env.BOT_TOKEN, {username: 'tlgrfbot'})
+app.catch((err) => console.log(err.message))
 app.use(Telegraf.memorySession())
 app.use(widgets.middleware())
 app.command('mybooks', sendWidget('mybooks'))
