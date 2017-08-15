@@ -1,5 +1,3 @@
-require('should')
 const test = require('ava')
 
-test('TelegrafWidget', (t) => {
-})
+test('TelegrafWidget', (t) => t.pass())
