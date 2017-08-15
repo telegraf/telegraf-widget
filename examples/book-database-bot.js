@@ -3,7 +3,7 @@ const TelegrafWidget = require('../')
 const { Extra, Markup } = Telegraf
 const { Widget, sendWidget } = TelegrafWidget
 
-const books = [
+const booksDB = [
   {id: '1', title: 'Book one', description: 'Book one description...'},
   {id: '2', title: 'Book two', description: 'Book two description...'},
   {id: '3', title: 'Book three', description: 'Book three description...'},
@@ -14,20 +14,20 @@ const books = [
 
 const booksWidget = new Widget('mybooks')
 
-booksWidget.create((ctx) => {
-  const buttons = books.map((book) => booksWidget.button(book.title, 'short-info', {id: book.id}))
+booksWidget.init((ctx) => {
+  const buttons = booksDB.map((book) => booksWidget.button(book.title, 'short-info', {id: book.id}))
   const extra = Markup.inlineKeyboard(buttons, {columns: 2}).extra()
   return ctx.reply('Choose a book:', extra)
 })
 
 booksWidget.on('list', (ctx) => {
-  const buttons = books.map((book) => booksWidget.button(book.title, 'short-info', {id: book.id}))
+  const buttons = booksDB.map((book) => booksWidget.button(book.title, 'short-info', {id: book.id}))
   const extra = Markup.inlineKeyboard(buttons, {columns: 2}).extra()
   return ctx.editMessageText('Ok\nChoose a book:', extra)
 })
 
 booksWidget.on('short-info', (ctx) => {
-  const book = books.find((book) => book.id === ctx.widget.query.id)
+  const book = booksDB.find((book) => book.id === ctx.widget.query.id)
   if (!book) {
     return ctx.widget.switchTo('list')
   }
@@ -40,7 +40,7 @@ booksWidget.on('short-info', (ctx) => {
 })
 
 booksWidget.on('full-info', (ctx) => {
-  const book = books.find((book) => book.id === ctx.widget.query.id)
+  const book = booksDB.find((book) => book.id === ctx.widget.query.id)
   if (!book) {
     return ctx.widget.switchTo('list')
   }
@@ -58,10 +58,7 @@ booksWidget.on('full-info', (ctx) => {
 const widgets = new TelegrafWidget()
 widgets.register(booksWidget)
 
-const app = new Telegraf(process.env.BOT_TOKEN, {username: 'tlgrfbot'})
-app.catch((err) => console.log(err.message))
-app.use(Telegraf.memorySession())
+const app = new Telegraf(process.env.BOT_TOKEN)
 app.use(widgets.middleware())
-app.command('mybooks', sendWidget('mybooks'))
-app.on('message', (ctx) => ctx.reply('Try /mybooks'))
+app.command('start', sendWidget('mybooks'))
 app.startPolling()
