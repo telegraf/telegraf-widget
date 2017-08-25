@@ -1,0 +1,49 @@
+{
+  "name": "telegraf-widget",
+  "version": "0.0.1",
+  "description": "📟 Widgets for Telegraf",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/telegraf/telegraf-widget.git"
+  },
+  "keywords": [
+    "telegram",
+    "telegraf",
+    "control widget",
+    "middleware"
+  ],
+  "author": "Vitaly Domnikov <dotcypress@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/telegraf/telegraf-widget/issues"
+  },
+  "homepage": "https://github.com/telegraf/telegraf-widget#readme",
+  "engines": {
+    "node": ">=6.2.1"
+  },
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "scripts": {
+    "test": "eslint . && ava test"
+  },
+  "dependencies": {
+    "debug": "^3.0.0"
+  },
+  "peerDependencies": {
+    "telegraf": "^3.5.2"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-ava": "^4.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.3.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "telegraf": "^3.5.2"
+  }
+}
