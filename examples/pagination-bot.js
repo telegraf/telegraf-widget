@@ -14,7 +14,7 @@ usersWidget.init(async (ctx) => {
 usersWidget.on('list', async (ctx) => {
   const { page } = ctx.widget.query
   const message = await fetchUsers(page)
-  ctx.editMessageText(message, generateKeyboard(page))
+  return ctx.editMessageText(message, generateKeyboard(page))
 })
 
 const widgets = new TelegrafWidget()
