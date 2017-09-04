@@ -12,18 +12,14 @@ const booksDB = [
   {id: '6', title: 'Book six', description: 'Book six description...'}
 ]
 
-const booksWidget = new Widget('mybooks')
+const booksWidget = new Widget('mybooks', 'list')
 
-booksWidget.init((ctx) => {
+booksWidget.on('list', ({ reply, editMessageText, widget }) => {
   const buttons = booksDB.map((book) => booksWidget.button(book.title, 'short-info', {id: book.id}))
   const extra = Markup.inlineKeyboard(buttons, {columns: 2}).extra()
-  return ctx.reply('Choose a book:', extra)
-})
-
-booksWidget.on('list', (ctx) => {
-  const buttons = booksDB.map((book) => booksWidget.button(book.title, 'short-info', {id: book.id}))
-  const extra = Markup.inlineKeyboard(buttons, {columns: 2}).extra()
-  return ctx.editMessageText('Ok\nChoose a book:', extra)
+  return widget.data
+    ? editMessageText('Ok\nChoose a book:', extra)
+    : reply('Ok\nChoose a book:', extra)
 })
 
 booksWidget.on('short-info', (ctx) => {

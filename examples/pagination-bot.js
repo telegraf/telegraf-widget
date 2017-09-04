@@ -4,17 +4,14 @@ const { Markup } = Telegraf
 const { Widget, sendWidget } = TelegrafWidget
 const fetch = require('node-fetch')
 
-const usersWidget = new Widget('users-widget')
-
-usersWidget.init(async (ctx) => {
-  const message = await fetchUsers()
-  return ctx.reply(message, generateKeyboard())
-})
+const usersWidget = new Widget('users-widget', 'list')
 
 usersWidget.on('list', async (ctx) => {
   const { page } = ctx.widget.query
   const message = await fetchUsers(page)
-  return ctx.editMessageText(message, generateKeyboard(page))
+  return ctx.widget.data
+    ? ctx.reply(message, generateKeyboard(page))
+    : ctx.editMessageText(message, generateKeyboard(page))
 })
 
 const widgets = new TelegrafWidget()
