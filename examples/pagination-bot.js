@@ -32,8 +32,7 @@ async function fetchUsers (page = 1) {
 function generateKeyboard (page) {
   const currentPage = parseInt(page) || 1
   return Markup.inlineKeyboard(
-    Array.from(Array(4))
-      .map((i, index) => index + 1)
+    Array.from({ length: 4 }, (_, index) => index + 1)
       .map((index) => {
         const text = currentPage === index ? `• ${index} •` : `${index}`
         return usersWidget.button(text, 'list', {page: index})
