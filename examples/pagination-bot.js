@@ -6,12 +6,12 @@ const fetch = require('node-fetch')
 
 const usersWidget = new Widget('users-widget', 'list')
 
-usersWidget.on('list', async (ctx) => {
-  const { page } = ctx.widget.query
+usersWidget.on('list', async ({ reply, editMessageText, widget }) => {
+  const page = widget.query && widget.query.page
   const message = await fetchUsers(page)
-  return ctx.widget.data
-    ? ctx.reply(message, generateKeyboard(page))
-    : ctx.editMessageText(message, generateKeyboard(page))
+  return widget.data
+    ? editMessageText(message, generateKeyboard(page))
+    : reply(message, generateKeyboard(page))
 })
 
 const widgets = new TelegrafWidget()
@@ -32,10 +32,9 @@ async function fetchUsers (page = 1) {
 function generateKeyboard (page) {
   const currentPage = parseInt(page) || 1
   return Markup.inlineKeyboard(
-    Array.from(Array(4))
-      .map((i, index) => index + 1)
+    Array.from({ length: 4 }, (_, index) => index + 1)
       .map((index) => {
-        const text = currentPage === index ? `(${index})` : `${index}`
+        const text = currentPage === index ? `• ${index} •` : `${index}`
         return usersWidget.button(text, 'list', {page: index})
       })
   ).extra()

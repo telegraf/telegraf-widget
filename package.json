@@ -1,6 +1,6 @@
 {
   "name": "telegraf-widget",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "📟 Widgets for Telegraf",
   "main": "index.js",
   "repository": {
@@ -30,20 +30,20 @@
     "test": "eslint . && ava test"
   },
   "dependencies": {
-    "debug": "^3.0.0"
+    "debug": "^4.1.0"
   },
   "peerDependencies": {
     "telegraf": "^3.5.2"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
-    "eslint": "^4.3.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-ava": "^4.0.0",
+    "ava": "^0.25.0",
+    "eslint": "^5.7.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-ava": "^5.1.1",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.3.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "telegraf": "^3.5.2"
   }
 }

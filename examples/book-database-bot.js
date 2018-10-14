@@ -15,7 +15,7 @@ const booksDB = [
 const booksWidget = new Widget('mybooks', 'list')
 
 booksWidget.on('list', ({ reply, editMessageText, widget }) => {
-  const buttons = booksDB.map((book) => booksWidget.button(book.title, 'short-info', {id: book.id}))
+  const buttons = booksDB.map((book) => booksWidget.button(book.title, 'short-info', book.id))
   const extra = Markup.inlineKeyboard(buttons, {columns: 2}).extra()
   return widget.data
     ? editMessageText('Ok\nChoose a book:', extra)
@@ -23,7 +23,7 @@ booksWidget.on('list', ({ reply, editMessageText, widget }) => {
 })
 
 booksWidget.on('short-info', (ctx) => {
-  const book = booksDB.find((book) => book.id === ctx.widget.query.id)
+  const book = booksDB.find((book) => book.id === ctx.widget.query)
   if (!book) {
     return ctx.widget.switchTo('list')
   }
@@ -36,7 +36,7 @@ booksWidget.on('short-info', (ctx) => {
 })
 
 booksWidget.on('full-info', (ctx) => {
-  const book = booksDB.find((book) => book.id === ctx.widget.query.id)
+  const book = booksDB.find((book) => book.id === ctx.widget.query)
   if (!book) {
     return ctx.widget.switchTo('list')
   }
@@ -51,8 +51,7 @@ booksWidget.on('full-info', (ctx) => {
   return ctx.editMessageText(text, extra)
 })
 
-const widgets = new TelegrafWidget()
-widgets.register(booksWidget)
+const widgets = new TelegrafWidget([booksWidget])
 
 const app = new Telegraf(process.env.BOT_TOKEN)
 app.use(widgets.middleware())
