@@ -35,7 +35,7 @@ function generateKeyboard (page) {
     Array.from({ length: 4 }, (_, index) => index + 1)
       .map((index) => {
         const text = currentPage === index ? `• ${index} •` : `${index}`
-        return usersWidget.button(text, 'list', {page: index})
+        return usersWidget.button(text, 'list', { page: index })
       })
   ).extra()
 }

@@ -4,12 +4,12 @@ const { Extra, Markup } = Telegraf
 const { Widget, sendWidget } = TelegrafWidget
 
 const booksDB = [
-  {id: '1', title: 'Book one', description: 'Book one description...'},
-  {id: '2', title: 'Book two', description: 'Book two description...'},
-  {id: '3', title: 'Book three', description: 'Book three description...'},
-  {id: '4', title: 'Book four', description: 'Book four description...'},
-  {id: '5', title: 'Book five', description: 'Book five description...'},
-  {id: '6', title: 'Book six', description: 'Book six description...'}
+  { id: '1', title: 'Book one', description: 'Book one description...' },
+  { id: '2', title: 'Book two', description: 'Book two description...' },
+  { id: '3', title: 'Book three', description: 'Book three description...' },
+  { id: '4', title: 'Book four', description: 'Book four description...' },
+  { id: '5', title: 'Book five', description: 'Book five description...' },
+  { id: '6', title: 'Book six', description: 'Book six description...' }
 ]
 
 const booksWidget = new Widget('mybooks', 'list')
